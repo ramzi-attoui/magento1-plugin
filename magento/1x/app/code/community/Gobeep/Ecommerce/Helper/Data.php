@@ -22,7 +22,7 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const XML_PATH_ACTIVE = 'sales/gobeep_ecommerce/active';
     const XML_PATH_CASHIER_URL = 'sales/gobeep_ecommerce/cashier_url';
-    const XML_PATH_PRIVATE_KEY = 'sales/gobeep_ecommerce/private_key';
+    const XML_PATH_PUBLIC_KEY = 'sales/gobeep_ecommerce/public_key';
     const XML_PATH_FROM_DATE = 'sales/gobeep_ecommerce/from_date';
     const XML_PATH_TO_DATE = 'sales/gobeep_ecommerce/to_date';
     const XML_PATH_IMAGE = 'sales/gobeep_ecommerce/image';
@@ -49,9 +49,9 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
         $toDate = Mage::getStoreConfig(self::XML_PATH_TO_DATE, $store);
         $timezone = Mage::getStoreConfig(self::XML_PATH_TIMEZONE, $store);
 
-        // Check if we have private key
-        $privateKey = Mage::getStoreConfig(self::XML_PATH_PRIVATE_KEY, $store);
-        if (!$privateKey) {
+        // Check if we have public key
+        $publicKey = Mage::getStoreConfig(self::XML_PATH_PUBLIC_KEY, $store);
+        if (!$publicKey) {
             return false;
         }
 
@@ -76,7 +76,7 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Generates a querystring out of the array passed in parameter
-     * encrypts the string generated with the private key stored in system/config
+     * encrypts the string generated with the public key stored in system/config
      * and returns a querystring
      * 
      * @param array $payload Array of parameters to sign
@@ -86,17 +86,17 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
     public function generateLink($payload, $store)
     {
         $querystring = http_build_query($payload);
-        $privateKey = Mage::getStoreConfig(self::XML_PATH_PRIVATE_KEY, $store);
+        $publicKey = Mage::getStoreConfig(self::XML_PATH_PUBLIC_KEY, $store);
         $url = Mage::getStoreConfig(self::XML_PATH_CASHIER_URL, $store);
         
         // Remove trailing slash if there's one
         $url = rtrim(trim($url), '/');
-
-        $key = openssl_get_privatekey($privateKey);
-        if (!openssl_sign($querystring, $signature, $key)) {
+        $key = openssl_get_publickey($publicKey);
+        if (!openssl_public_encrypt($querystring, $signature, $key)) {
             return null;
         }
 
+        openssl_free_key($key);
         $payload['signature'] = base64_encode($signature);
 
         return $url . '?' . http_build_query($payload);
@@ -123,18 +123,6 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
             Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA),
             $image
         );
-    }
-
-    /**
-     * Returns the private key stored in system configuration
-     * this private key is given by the GoBeep team
-     * 
-     * @param int $store Store ID
-     * @return string
-     */
-    protected function getPrivateKey($store = null)
-    {
-        return Mage::getStoreConfig(self::XML_PATH_PRIVATE_KEY, $store);
     }
 
     /**
