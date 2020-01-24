@@ -1,5 +1,3 @@
-![](https://img.shields.io/github/v/release/drivetopurchase/ecommerce?style=flat-square)
-
 ## GoBeep - Ecommerce module - Magento 1x
 
 Gobeep’s extension for Magento 1.x is designed to help clients who use the Magento platform to quickly and seamlessly generate links to validate game codes distributed by Gobeep gaming solution.
