@@ -34,8 +34,8 @@ class Gobeep_Ecommerce_Model_Link extends Mage_Core_Helper_Abstract
 
         // Prepare the link
         return Mage::helper('gobeep_ecommerce')->generateLink([
-            'order_id' => $incrementId,
             'order_amount' => $orderAmount,
+            'order_id' => $incrementId,
             'referrer' => 'online',
         ], $storeId);
     }

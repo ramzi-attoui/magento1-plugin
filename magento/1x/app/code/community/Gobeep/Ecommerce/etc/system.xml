@@ -50,15 +50,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </cashier_url>
-                        <public_key translate="label">
-                            <label>Public Key</label>
-                            <comment><![CDATA[Query parameters will be signed with this public key]]></comment>
-                            <frontend_type>textarea</frontend_type>
+                        <secret translate="label">
+                            <label>Secret</label>
+                            <comment><![CDATA[Query parameters will be signed with this secret]]></comment>
+                            <frontend_type>text</frontend_type>
                             <sort_order>2</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </public_key>
+                        </secret>
                         <from_date translate="label">
                             <label>From Date</label>
                             <frontend_type>text</frontend_type>

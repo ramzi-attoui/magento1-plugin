@@ -22,7 +22,7 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const XML_PATH_ACTIVE = 'sales/gobeep_ecommerce/active';
     const XML_PATH_CASHIER_URL = 'sales/gobeep_ecommerce/cashier_url';
-    const XML_PATH_PUBLIC_KEY = 'sales/gobeep_ecommerce/public_key';
+    const XML_PATH_SECRET = 'sales/gobeep_ecommerce/secret';
     const XML_PATH_FROM_DATE = 'sales/gobeep_ecommerce/from_date';
     const XML_PATH_TO_DATE = 'sales/gobeep_ecommerce/to_date';
     const XML_PATH_IMAGE = 'sales/gobeep_ecommerce/image';
@@ -49,9 +49,9 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
         $toDate = Mage::getStoreConfig(self::XML_PATH_TO_DATE, $store);
         $timezone = Mage::getStoreConfig(self::XML_PATH_TIMEZONE, $store);
 
-        // Check if we have public key
-        $publicKey = Mage::getStoreConfig(self::XML_PATH_PUBLIC_KEY, $store);
-        if (!$publicKey) {
+        // Check if we have secret
+        $secret = Mage::getStoreConfig(self::XML_PATH_SECRET, $store);
+        if (!$secret) {
             return false;
         }
 
@@ -86,18 +86,10 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
     public function generateLink($payload, $store)
     {
         $querystring = http_build_query($payload);
-        $publicKey = Mage::getStoreConfig(self::XML_PATH_PUBLIC_KEY, $store);
+        $secret = Mage::getStoreConfig(self::XML_PATH_SECRET, $store);
         $url = Mage::getStoreConfig(self::XML_PATH_CASHIER_URL, $store);
-        
-        // Remove trailing slash if there's one
-        $url = rtrim(trim($url), '/');
-        $key = openssl_get_publickey($publicKey);
-        if (!openssl_public_encrypt($querystring, $signature, $key)) {
-            return null;
-        }
 
-        openssl_free_key($key);
-        $payload['signature'] = base64_encode($signature);
+        $payload['signature'] = self::sign($querystring, $secret);
 
         return $url . '?' . http_build_query($payload);
     }
@@ -164,5 +156,17 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
 
         // Check that user date is between start & end
         return (($currentDateTs >= $startDateTs) && ($currentDateTs <= $endDateTs));
+    }
+
+    /**
+     * Signs a querystring with hash_hmac (SHA256)
+     * 
+     * @param string $text   Text to sign
+     * @param string $secret Secret to use for hashing
+     * @return string
+     */
+    public static function sign($text, $secret)
+    {
+        return base64_encode(hash_hmac('sha256', $text, $secret, true));
     }
 }
