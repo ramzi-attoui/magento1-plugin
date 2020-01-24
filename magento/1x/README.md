@@ -14,11 +14,11 @@ After the extension is installed, log in to the Magento Account, Click `System`,
 Next, in the `left-nav` menu, under `Sales`, expand the `Gobeep Ecommerce` section.
 
 * Set Enabled to `Yes`*
-* Enter your `Public Key`*
+* Enter your `Secret`*
 * Enter `Start date/End date`, block won't return any output if current date is not in range, if you don't specify any date, the plugin will always display the block output.
 * Upload internal image or specify external image*
 
-The public key is given by GoBeep 
+The secret is given by GoBeep.
 
 #### Transactional email integration
 
