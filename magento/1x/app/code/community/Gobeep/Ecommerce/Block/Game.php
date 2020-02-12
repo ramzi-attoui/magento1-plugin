@@ -20,60 +20,32 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-class Gobeep_Ecommerce_Block_Link extends Mage_Core_Block_Template
+class Gobeep_Ecommerce_Block_Game extends Mage_Core_Block_Template
 {
     /**
      * Internal constructor
      */
     protected function _construct()
     {
-        $this->setTemplate('gobeep/link.phtml');
+        $this->setTemplate('gobeep/game.phtml');
         parent::_construct();
     }
 
     /**
-     * Checks if a link can be generated based on system configuration
+     * Checks if game can be played based on system configuration
      * parameters
      * 
      * @return bool
      */
-    public function canLink()
+    public function canPlay()
     {
-        if (
-            !$this->hasData('order') ||
-            !is_a($this->getData('order'), 'Mage_Sales_Model_Order')
-        ) {
-            return false;
-        }
-
-        $order = $this->getData('order');
-        $storeId = $order->getStoreId();
-
+        $storeId = Mage::app()->getStore()->getId();
         $helper = Mage::helper('gobeep_ecommerce');
         if (!$helper->isModuleEnabled($storeId)) {
             return false;
         }
 
-        $orderAmount = $order->getGrandTotal();
-        if ($orderAmount === 0) {
-            return false;
-        }
-
         return true;
-    }
-
-    /**
-     * Returns the image associated to the link
-     * 
-     * @return string
-     */
-    public function getImage()
-    {
-        $order = $this->getData('order');
-        $storeId = $order->getStoreId();
-        $helper = Mage::helper('gobeep_ecommerce');
-
-        return $helper->getImage($storeId);
     }
 
     /**
@@ -83,9 +55,10 @@ class Gobeep_Ecommerce_Block_Link extends Mage_Core_Block_Template
      */
     public function getLink()
     {
-        $link = Mage::getModel('gobeep_ecommerce/link')
-            ->getCashierLink($this->getData('order'));
-
-        return $link;
+        $storeId = Mage::app()->getStore()->getId();
+        return Mage::getStoreConfig(
+            Gobeep_Ecommerce_Helper_Data::XML_PATH_GAME_URL,
+            $storeId
+        );
     }
 }

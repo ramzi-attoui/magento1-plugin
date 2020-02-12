@@ -41,11 +41,22 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </active>
+                        <game_url translate="label">
+                            <label>Game URL</label>
+                            <comment><![CDATA[Post here the game URL given by GoBeep on the form: https://eu.d2p.run/XXX]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-url</validate>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </game_url>
                         <cashier_url translate="label">
                             <label>Cashier URL</label>
-                            <comment><![CDATA[Post here the here cashier URL given by GoBeep on the form: https://eu-pos.d2p.run/XXX]]></comment>
+                            <comment><![CDATA[Post here the cashier URL given by GoBeep on the form: https://eu-pos.d2p.run/XXX]]></comment>
                             <frontend_type>text</frontend_type>
-                            <sort_order>2</sort_order>
+                            <validate>validate-url</validate>
+                            <sort_order>3</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -54,7 +65,7 @@
                             <label>Secret</label>
                             <comment><![CDATA[Query parameters will be signed with this secret]]></comment>
                             <frontend_type>text</frontend_type>
-                            <sort_order>2</sort_order>
+                            <sort_order>4</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -63,7 +74,7 @@
                             <label>From Date</label>
                             <frontend_type>text</frontend_type>
                             <frontend_model>gobeep_ecommerce/adminhtml_system_config_date</frontend_model>
-                            <sort_order>3</sort_order>
+                            <sort_order>5</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -72,11 +83,20 @@
                             <label>To Date</label>
                             <frontend_type>text</frontend_type>
                             <frontend_model>gobeep_ecommerce/adminhtml_system_config_date</frontend_model>
-                            <sort_order>4</sort_order>
+                            <sort_order>6</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </to_date>
+                        <eligible_days>
+                            <label>Eligible days</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>Gobeep_Ecommerce_Model_System_Config_Source_View</source_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </eligible_days>
                         <image>
                             <label>Image</label>
                             <comment>Upload your Image from here</comment>
@@ -84,7 +104,7 @@
                             <backend_model>adminhtml/system_config_backend_image</backend_model>
                             <upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
                             <base_url type="media" scope_info="1">theme</base_url>
-                            <sort_order>5</sort_order>
+                            <sort_order>8</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -94,11 +114,30 @@
                             <comment>Set your external image here (has priority on internal image)</comment>
                             <frontend_type>text</frontend_type>
                             <validate>validate-url</validate>
-                            <sort_order>6</sort_order>
+                            <sort_order>9</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </external_image>
+                        <notify translate="label">
+                            <label>Notify refund to customer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </notify>
+                        <email_template translate="label">
+                            <label>Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><notify>1</notify></depends>
+                        </email_template>
                     </fields>
                 </gobeep_ecommerce>
             </groups>

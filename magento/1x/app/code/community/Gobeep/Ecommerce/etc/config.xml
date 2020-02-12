@@ -23,15 +23,41 @@
 <config>
     <modules>
         <Gobeep_Ecommerce>
-            <version>1.0.0.0</version>
+            <version>1.1.0.0</version>
         </Gobeep_Ecommerce>
     </modules>
     <global>
         <models>
             <gobeep_ecommerce>
                 <class>Gobeep_Ecommerce_Model</class>
+                <resourceModel>gobeep_ecommerce_resource</resourceModel>
             </gobeep_ecommerce>
+            <gobeep_ecommerce_resource>
+                <class>Gobeep_Ecommerce_Model_Resource</class>
+                <entities>
+                    <refund>
+                        <table>gobeep_ecommerce_refund</table>
+                    </refund>
+                </entities>
+            </gobeep_ecommerce_resource>
         </models>
+        <resources>
+            <gobeep_ecommerce_setup>
+                <setup>
+                    <module>Gobeep_Ecommerce</module>
+                </setup>
+            </gobeep_ecommerce_setup>
+            <gobeep_ecommerce_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </gobeep_ecommerce_read>
+            <gobeep_ecommerce_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </gobeep_ecommerce_write>
+        </resources>
         <helpers>
             <gobeep_ecommerce>
                 <class>Gobeep_Ecommerce_Helper</class>
@@ -42,5 +68,45 @@
                 <class>Gobeep_Ecommerce_Block</class>
             </gobeep_ecommerce>
         </blocks>
+        <template>
+            <email>
+                <gobeep_ecommerce_status_refunded translate="label" module="gobeep_ecommerce">
+                    <label>Gobeep Ecommerce Status Refunded</label>
+                    <file>gobeep_ecommerce_status_refunded.html</file>
+                    <type>html</type>
+                </gobeep_ecommerce_status_refunded>
+            </email>
+        </template>
     </global>
+    <frontend>
+        <routers>
+            <gobeep_ecommerce>
+                <use>standard</use>
+                <args>
+                    <module>Gobeep_Ecommerce</module>
+                    <frontName>gobeep</frontName>
+                </args>
+            </gobeep_ecommerce>
+        </routers>
+    </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <gobeep_ecommerce before="Mage_Adminhtml">Gobeep_Ecommerce_Adminhtml</gobeep_ecommerce>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <gobeep_ecommerce>
+                    <file>gobeep/ecommerce.xml</file>
+                </gobeep_ecommerce>
+            </updates>
+        </layout>
+    </adminhtml>
 </config>

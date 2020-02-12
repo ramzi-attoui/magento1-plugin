@@ -1,5 +1,4 @@
 <?php
-
 /**
  * GoBeep
  *
@@ -19,25 +18,13 @@
  * @copyright   Copyright (c) GoBeep (https://gobeep.co)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Gobeep_Ecommerce_Model_Link extends Mage_Core_Helper_Abstract
+class Gobeep_Ecommerce_Model_Resource_Refund_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
     /**
-     * Returns the Gobeep/Ecommerce cashier link
-     * 
-     * @param Mage_Sales_Model_Order $order Order object
-     * @return string
+     * Model initialization
      */
-    public function getCashierLink($order)
+    protected function _construct()
     {
-        $storeId = $order->getStoreId();
-        $orderAmount = $order->getGrandTotal();
-        $orderId = $order->getId();
-
-        // Prepare the link
-        return Mage::helper('gobeep_ecommerce')->generateCashierLink([
-            'order_amount' => $orderAmount,
-            'order_id' => $orderId,
-            'referrer' => 'online',
-        ], $storeId);
+        $this->_init('gobeep_ecommerce/refund');
     }
 }
