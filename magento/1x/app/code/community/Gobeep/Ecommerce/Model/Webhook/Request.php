@@ -50,7 +50,7 @@ class Gobeep_Ecommerce_Model_Webhook_Request extends Mage_Core_Model_Abstract
             }
             // Check if order exists
             $order = Mage::getModel('sales/order')->load($refund->getOrderId());
-            if (!$order) {
+            if (!$order->getData()) {
                 $errors[] = $helper->__('Order doesn\'t exist');
             } else {
                 $refund->setOrderIncrementId($order->getIncrementId());
