@@ -24,7 +24,7 @@ class Gobeep_Ecommerce_Block_Adminhtml_System_Config_Date extends Mage_Adminhtml
     protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
     {
         $date = new Varien_Data_Form_Element_Date;
-        $format = Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
+        $format = 'yyyy-MM-dd';
 
         $data = array(
             'name'      => $element->getName(),
@@ -34,8 +34,7 @@ class Gobeep_Ecommerce_Block_Adminhtml_System_Config_Date extends Mage_Adminhtml
         
         $date->setData($data);
         $date->setValue($element->getValue(), $format);
-        $date->setFormat(Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT));
-        $date->setClass($element->getFieldConfig()->validate->asArray());
+        $date->setFormat($format);
         $date->setForm($element->getForm());
 
         return $date->getElementHtml();
