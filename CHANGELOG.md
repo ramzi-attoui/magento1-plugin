@@ -1,3 +1,8 @@
+## 1.1.4.0 (February 14, 2020)
+
+CHORE:
+* Add composer/modman support
+
 ## 1.1.3.0 (February 14, 2020)
 
 BUG FIXES:
