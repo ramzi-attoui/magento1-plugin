@@ -67,6 +67,8 @@ class Gobeep_Ecommerce_Block_Adminhtml_Refund_Grid extends Mage_Adminhtml_Block_
             ]
         );
 
+        $collection->getSelect()->where('oa.address_type = \'billing\'');
+        
         $this->setCollection($collection);
 
         return parent::_prepareCollection();
