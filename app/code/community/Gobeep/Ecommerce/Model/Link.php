@@ -22,6 +22,17 @@
 class Gobeep_Ecommerce_Model_Link extends Mage_Core_Helper_Abstract
 {
     /**
+     * Returns the Gobeep/Ecommerce game link
+     * 
+     * @param int $storeId Store ID
+     * @return string
+     */
+    public function getGameLink($storeId)
+    {
+        return Mage::helper('gobeep_ecommerce')->getGameLink($storeId);
+    }
+
+    /**
      * Returns the Gobeep/Ecommerce cashier link
      * 
      * @param Mage_Sales_Model_Order $order Order object
@@ -34,7 +45,7 @@ class Gobeep_Ecommerce_Model_Link extends Mage_Core_Helper_Abstract
         $orderId = $order->getId();
 
         // Prepare the link
-        return Mage::helper('gobeep_ecommerce')->generateCashierLink([
+        return Mage::helper('gobeep_ecommerce')->getCashierLink([
             'order_amount' => $orderAmount,
             'order_id' => $orderId,
             'referrer' => 'online',

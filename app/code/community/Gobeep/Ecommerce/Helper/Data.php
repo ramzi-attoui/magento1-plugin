@@ -28,8 +28,10 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
     const XML_PATH_FROM_DATE = 'sales/gobeep_ecommerce/from_date';
     const XML_PATH_TO_DATE = 'sales/gobeep_ecommerce/to_date';
     const XML_PATH_ELIGIBLE_DAYS = 'sales/gobeep_ecommerce/eligible_days';
-    const XML_PATH_IMAGE = 'sales/gobeep_ecommerce/image';
-    const XML_PATH_EXT_IMAGE = 'sales/gobeep_ecommerce/external_image';
+    const XML_PATH_CASHIER_IMAGE = 'sales/gobeep_ecommerce/cashier_image';
+    const XML_PATH_EXT_CASHIER_IMAGE = 'sales/gobeep_ecommerce/cashier_external_image';
+    const XML_PATH_GAME_IMAGE = 'sales/gobeep_ecommerce/game_image';
+    const XML_PATH_EXT_GAME_IMAGE = 'sales/gobeep_ecommerce/game_external_image';
     const XML_PATH_NOTIFY = 'sales/gobeep_ecommerce/notify';
     const XML_PATH_EMAIL_TEMPLATE = 'sales/gobeep_ecommerce/email_template';
 
@@ -79,17 +81,34 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
             if ($url === '') {
                 return false;
             }
-            // Check if we have internal or external image
-            $image = Mage::getStoreConfig(self::XML_PATH_IMAGE, $store);
-            $externalImage = Mage::getStoreConfig(self::XML_PATH_EXT_IMAGE, $store);
 
-            if (empty($image) && empty($externalImage)) {
+            // Check if we have internal or external cashier image
+            $cashierImage = Mage::getStoreConfig(self::XML_PATH_CASHIER_IMAGE, $store);
+            $externalCashierImage = Mage::getStoreConfig(self::XML_PATH_EXT_CASHIER_IMAGE, $store);
+            if (empty($cashierImage) && empty($externalCashierImage)) {
+                return false;
+            }
+            // Check if we have internal or external game image
+            $gameImage = Mage::getStoreConfig(self::XML_PATH_GAME_IMAGE, $store);
+            $externalGameImage = Mage::getStoreConfig(self::XML_PATH_EXT_GAME_IMAGE, $store);
+            if (empty($gameImage) && empty($externalGameImage)) {
                 return false;
             }
             return $this->isDayEligible($eligibleDays, $timezone);
         }
 
         return true;
+    }
+
+    /**
+     * Returns the game url
+     * 
+     * @param int $store Store ID
+     * @return string
+     */
+    public function getGameLink($store)
+    {
+        return Mage::getStoreConfig(self::XML_PATH_GAME_URL, $store);
     }
 
     /**
@@ -101,7 +120,7 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
      * @param int   $store   Store ID
      * @return string|null
      */
-    public function generateCashierLink($payload, $store)
+    public function getCashierLink($payload, $store)
     {
         $querystring = http_build_query($payload);
         $url = Mage::getStoreConfig(self::XML_PATH_CASHIER_URL, $store);
@@ -112,16 +131,39 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Returns either an external or internal image
+     * Returns either an external or internal game image
      * based on system configuration
      * 
      * @param int $store Store ID
      * @return string
      */
-    public function getImage($store = null)
+    public function getGameImage($store = null)
     {
-        $image = Mage::getStoreConfig(self::XML_PATH_IMAGE, $store);
-        $externalImage = Mage::getStoreConfig(self::XML_PATH_EXT_IMAGE, $store);
+        $image = Mage::getStoreConfig(self::XML_PATH_GAME_IMAGE, $store);
+        $externalImage = Mage::getStoreConfig(self::XML_PATH_EXT_GAME_IMAGE, $store);
+
+        if (!empty($externalImage)) {
+            return $externalImage;
+        }
+
+        return sprintf(
+            '%stheme/%s',
+            Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA),
+            $image
+        );
+    }
+
+    /**
+     * Returns either an external or internal cashier image
+     * based on system configuration
+     * 
+     * @param int $store Store ID
+     * @return string
+     */
+    public function getCashierImage($store = null)
+    {
+        $image = Mage::getStoreConfig(self::XML_PATH_CASHIER_IMAGE, $store);
+        $externalImage = Mage::getStoreConfig(self::XML_PATH_EXT_CASHIER_IMAGE, $store);
 
         if (!empty($externalImage)) {
             return $externalImage;

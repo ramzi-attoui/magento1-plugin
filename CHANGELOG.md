@@ -1,3 +1,12 @@
+## 1.2.0 (February 18, 2020)
+
+FEATURES:
+* `Gobeep_Ecommerce_Block_Link` can now generate both cashier/game links depending on `for` parameter passed to the block, see `README.md` for details.
+
+CHORE:
+* Refactoring
+* Switch to regular semver system e.g. `MAJOR.MINOR.PATCH`
+
 ## 1.1.4.0 (February 14, 2020)
 
 CHORE:

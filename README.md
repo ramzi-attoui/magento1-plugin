@@ -15,31 +15,38 @@ Next, in the `left-nav` menu, under `Sales`, expand the `Gobeep Ecommerce` secti
 
 ### Inputs
 
-| Name               | Type             | Description                                                                   |  Default  | Required |
-| ------------------ | ---------------- | ----------------------------------------------------------------------------- | --------- | -------- |
-| active             | yes/no           | Whether extension is disabled or enabled                                      | No        | Yes      |
-| game_url           | text             | Game URL (used in `Gobeep_Ecommerce_Block_Game` block)                        |           | Yes      |
-| cashier_url        | text             | Cashier URL (used in `Gobeep_Ecommerce_Block_Link` block)                     |           | Yes      |
-| secret             | text             | Secret given by `GoBeep` for signing requests and verify incoming webhooks    |           | Yes      |
-| from_date          | date             | Start date (Date will be checked to determine if module is enabled or not)    |           | No       |
-| to_date            | date             | End date (Date will be checked to determine if module is enabled or not)      |           | No       |
-| eligible_days      | multiselect      | Days of the week when module is enabled                                       |           | No       |
-| image              | image            | Link image (used in `Gobeep_Ecommerce_Block_Link` block)                      |           | Yes*     |
-| external_image     | string           | Link image URL (used in `Gobeep_Ecommerce_Block_Link` block)                  |           | Yes*     |
-| notify             | yes/no           | Whether we should notify users when they are refunded                         |           | No       |
-| email_template     | string           | Email Notification template (refund)                                          |           | No       |
+| Name                    | Type             | Description                                                                   |  Default  | Required |
+| ----------------------- | ---------------- | ----------------------------------------------------------------------------- | --------- | -------- |
+| active                  | yes/no           | Whether extension is disabled or enabled                                      | No        | Yes      |
+| game_url                | text             | Game URL (used in `Gobeep_Ecommerce_Block_Game` block)                        |           | Yes      |
+| cashier_url             | text             | Cashier URL (used in `Gobeep_Ecommerce_Block_Link` block)                     |           | Yes      |
+| secret                  | text             | Secret given by `GoBeep` for signing requests and verify incoming webhooks    |           | Yes      |
+| from_date               | date             | Start date (Date will be checked to determine if module is enabled or not)    |           | No       |
+| to_date                 | date             | End date (Date will be checked to determine if module is enabled or not)      |           | No       |
+| eligible_days           | multiselect      | Days of the week when module is enabled                                       |           | No       |
+| cashier_image           | image            | Cashier link image (used in `Gobeep_Ecommerce_Block_Link` block)              |           | Yes*     |
+| cashier_external_image  | string           | Cashier link image URL (used in `Gobeep_Ecommerce_Block_Link` block)          |           | Yes*     |
+| game_image              | image            | Game link image (used in `Gobeep_Ecommerce_Block_Link` block)                 |           | Yes*     |
+| game_external_image     | string           | Game link image URL (used in `Gobeep_Ecommerce_Block_Link` block)             |           | Yes*     |
+| notify                  | yes/no           | Whether we should notify users when they are refunded                         |           | No       |
+| email_template          | string           | Email Notification template (refund)                                          |           | No       |
 
-<sub>(*) Use one or another</sub>
+<sub>(*) Use one or another (external or internal)</sub>
 
 #### Blocks
 
-##### Link block (cashier link)
+##### Link block
 
-We recommend to use the `New Order` email to integrate the cashier link. The `Mage_Sales_Model_Order` object **MUST** be passed to the block.
-
-```{{block type="gobeep_ecommerce/link" order=$order}}```
-
+We recommend to use the `New Order` email to integrate the cashier/game links. The `Mage_Sales_Model_Order` object **MUST** be passed to the block.
 The default template is located in `app/design/base/default/template/gobeep` directory.
+
+###### cashier link
+
+```{{block type="gobeep_ecommerce/link" order=$order for="cashier"}}```
+
+###### game link
+
+```{{block type="gobeep_ecommerce/link" order=$order for="game"}}```
 
 ##### Game block
 
