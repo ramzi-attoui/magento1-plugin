@@ -33,7 +33,7 @@ If you believe you have an improvement to the plugin, please feel free to send a
 #### How To Submit A PR
 
 * Fork the repository on GitHub
-* Clone the repository into your local system and create a branch that describes what you are working on by prefixing with `feature/`, `fix/`, `chore/`and so on followed by the title of the fix or feature.
+* Clone the repository into your local system and create a branch that describes what you are working on by prefixing with `feat:`, `fix:`, `chore:`and so on followed by the title of the fix or feature.
 * Make commits that are descriptive and break down the process.
 * Please **don't** modify the CHANGELOG - this will be maintained by GoBeep developers.
 * Push your fix to the remote version of your branch and create a PR that aims to merge that branch into `master`.
