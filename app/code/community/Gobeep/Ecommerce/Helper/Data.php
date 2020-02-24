@@ -33,7 +33,8 @@ class Gobeep_Ecommerce_Helper_Data extends Mage_Core_Helper_Abstract
     const XML_PATH_GAME_IMAGE = 'sales/gobeep_ecommerce/game_image';
     const XML_PATH_EXT_GAME_IMAGE = 'sales/gobeep_ecommerce/game_external_image';
     const XML_PATH_NOTIFY = 'sales/gobeep_ecommerce/notify';
-    const XML_PATH_EMAIL_TEMPLATE = 'sales/gobeep_ecommerce/email_template';
+    const XML_PATH_REFUND_EMAIL_TEMPLATE = 'sales/gobeep_ecommerce/refund_email_template';
+    const XML_PATH_WINNING_EMAIL_TEMPLATE = 'sales/gobeep_ecommerce/winning_email_template';
 
     const XML_PATH_TIMEZONE = 'general/locale/timezone';
 

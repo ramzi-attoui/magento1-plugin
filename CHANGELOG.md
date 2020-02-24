@@ -1,3 +1,13 @@
+## 1.3.0 (February 18, 2020)
+
+FEATURES:
+* Added new email template to handle "pending" status for a refund e.g. "New winner"
+* Support sending this new email through the `WebhookController`
+* Added unique index for `order_id` column
+
+FIX:
+* Refactoring (renamed `email_sent` column to `refund_email_sent`)
+
 ## 1.2.0 (February 18, 2020)
 
 FEATURES:

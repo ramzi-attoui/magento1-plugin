@@ -40,16 +40,27 @@ class Gobeep_Ecommerce_Model_Refund extends Mage_Core_Model_Abstract
     public function sendStatusNotification()
     {
         $storeId = $this->getStoreId();
-        $notifyRefundEnabled = Mage::getStoreConfig(Gobeep_Ecommerce_Helper_Data::XML_PATH_NOTIFY, $storeId);
-        if (!$notifyRefundEnabled) {
+        $notifyEnabled = Mage::getStoreConfig(Gobeep_Ecommerce_Helper_Data::XML_PATH_NOTIFY, $storeId);
+        if (!$notifyEnabled) {
             return false;
         }
 
         try {
             $status = $this->getStatus();
-            $emailTemplate = Mage::getStoreConfig(Gobeep_Ecommerce_Helper_Data::XML_PATH_EMAIL_TEMPLATE, $storeId);
+            $template = ($status === self::STATUS_REFUNDED) ?
+                Gobeep_Ecommerce_Helper_Data::XML_PATH_REFUND_EMAIL_TEMPLATE :
+                Gobeep_Ecommerce_Helper_Data::XML_PATH_WINNING_EMAIL_TEMPLATE;
 
-            if ($emailTemplate && $status === self::STATUS_REFUNDED) {
+            // Check if emails have been already sent
+            if (
+                ($status === self::STATUS_REFUNDED && $this->getRefundEmailSent()) ||
+                ($status === self::STATUS_PENDING && $this->getWinningEmailSent())
+            ) {
+                return false;
+            }
+
+            $emailTemplate = Mage::getStoreConfig($template, $storeId);
+            if ($emailTemplate) {
                 $mailer = Mage::getModel('core/email_template_mailer');
                 $emailInfo = Mage::getModel('core/email_info');
                 $emailInfo->addTo($this->getCustomerEmail(), "{$this->getCustomerFirstname()} {$this->getCustomerLastname()}");
@@ -67,7 +78,7 @@ class Gobeep_Ecommerce_Model_Refund extends Mage_Core_Model_Abstract
                 ]);
                 $mailer->send();
 
-                $this->setEmailSent(true);
+                $this->setData(($status === self::STATUS_REFUNDED) ? 'refund_email_sent' : 'winning_email_sent', true);
                 $this->save();
             }
         } catch (Exception $e) {
