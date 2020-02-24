@@ -1,4 +1,4 @@
-## 1.3.0 (February 18, 2020)
+## 1.3.0 (February 24, 2020)
 
 FEATURES:
 * Added new email template to handle "pending" status for a refund e.g. "New winner"
