@@ -32,10 +32,12 @@ class Gobeep_Ecommerce_Model_Webhook_Request extends Mage_Core_Model_Abstract
         $helper = Mage::helper('gobeep_ecommerce');
         $refund = Mage::getModel('gobeep_ecommerce/refund');
         $refund->addData([
+            'status' => Gobeep_Ecommerce_Model_Refund::STATUS_PENDING,
             'order_id' => $payload->orderId,
             'created_at' => $payload->createdAt,
             'updated_at' => $payload->createdAt,
-            'email_sent' => 0
+            'refund_email_sent' => 0,
+            'winning_email_sent' => 0
         ]);
 
         $errors = [];
@@ -67,6 +69,7 @@ class Gobeep_Ecommerce_Model_Webhook_Request extends Mage_Core_Model_Abstract
         }
 
         $refund->save(false);
+        $refund->sendStatusNotification();
 
         Mage::dispatchEvent('gobeep_ecommerce_adminhtml_webhook_refund', [$refund]);
 

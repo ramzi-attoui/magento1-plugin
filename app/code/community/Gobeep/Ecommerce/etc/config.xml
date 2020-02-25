@@ -23,7 +23,7 @@
 <config>
     <modules>
         <Gobeep_Ecommerce>
-            <version>1.2.0</version>
+            <version>1.3.0</version>
         </Gobeep_Ecommerce>
     </modules>
     <global>
@@ -70,6 +70,11 @@
         </blocks>
         <template>
             <email>
+                <gobeep_ecommerce_status_won translate="label" module="gobeep_ecommerce">
+                    <label>Gobeep Ecommerce Status Winning</label>
+                    <file>gobeep_ecommerce_status_winning.html</file>
+                    <type>html</type>
+                </gobeep_ecommerce_status_won>
                 <gobeep_ecommerce_status_refunded translate="label" module="gobeep_ecommerce">
                     <label>Gobeep Ecommerce Status Refunded</label>
                     <file>gobeep_ecommerce_status_refunded.html</file>

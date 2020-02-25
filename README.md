@@ -28,8 +28,9 @@ Next, in the `left-nav` menu, under `Sales`, expand the `Gobeep Ecommerce` secti
 | cashier_external_image  | string           | Cashier link image URL (used in `Gobeep_Ecommerce_Block_Link` block)          |           | Yes*     |
 | game_image              | image            | Game link image (used in `Gobeep_Ecommerce_Block_Link` block)                 |           | Yes*     |
 | game_external_image     | string           | Game link image URL (used in `Gobeep_Ecommerce_Block_Link` block)             |           | Yes*     |
-| notify                  | yes/no           | Whether we should notify users when they are refunded                         |           | No       |
-| email_template          | string           | Email Notification template (refund)                                          |           | No       |
+| notify                  | yes/no           | Whether we should notify users when they are winning or they are refunded     |           | No       |
+| winning_email_template  | string           | Email Notification template (winning)                                         |           | No       |
+| refund_email_template   | string           | Email Notification template (refund)                                          |           | No       |
 
 <sub>(*) Use one or another (external or internal)</sub>
 
@@ -62,7 +63,14 @@ The default template is located in `app/design/base/default/template/gobeep` dir
 
 #### Transactional Email
 
-If you want to use email notifications for refunds, you should create a new template for the `Gobeep Ecommerce Status Refunded` transactional email in the `admin`. 
+If you want to use email notifications. Here's the list of templates.
+:warning: You should create a new template for all these transactional emails in the `admin`, there's no default template for them. 
+
+| Name                             | Type             |
+| -------------------------------- | ---------------- |
+| Gobeep Ecommerce Status Refunded | Refund email     |
+| Gobeep Ecommerce Status Winning  | Winning email    |
+
 
 ### Support
 

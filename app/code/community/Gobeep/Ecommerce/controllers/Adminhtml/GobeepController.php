@@ -47,11 +47,8 @@ class Gobeep_Ecommerce_Adminhtml_GobeepController extends Mage_Adminhtml_Control
             $currStatus = $refund->getStatus();
             if ($currStatus !== $newStatus) {
                 $refund->setStatus($newStatus)->save();
+                $refund->sendStatusNotification();
                 $count++;
-                // Send email to customer only once
-                if (!$refund->getEmailSent()) {
-                    $refund->sendStatusNotification();
-                }
                 Mage::dispatchEvent('gobeep_ecommerce_adminhtml_update_refund_status', [$refund]);
             }
         }
